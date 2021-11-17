@@ -1,11 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
 
+let commitHash = require('child_process')
+  .execSync('git rev-parse --short HEAD')
+  .toString()
+  .replace(/(\r\n|\n|\r)/gm, "");
+
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.[contenthash].js',
+    filename: `bundle.${commitHash}.[contenthash].js`,
     library: 'jre',
     libraryTarget: 'var'
   },
